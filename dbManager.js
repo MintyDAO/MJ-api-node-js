@@ -1,7 +1,6 @@
 // HERE can be add/replace logic from any DB mysql, mongo ect
-
 const users = require('./DB_logic/users.js')
-const requests = require('./DB_logic/request')
+const requests = require('./DB_logic/requests.js')
 
 // USERS DB actions
 
@@ -16,7 +15,7 @@ const isEmailHashIdRegistred = (emailHashId) => {
 }
 
 const getUserImagesByEmailHashId = (emailHashId) => {
-  users.getUserImagesByEmailHashId(emailHashId)
+  return users.getUserImagesByEmailHashId(emailHashId)
 }
 
 const addUserImagesByEmailHashId = (emailHashId, img) => {
@@ -40,3 +39,24 @@ const getUserByRequest = (description) => {
 const deleteUserByDescription = (description) => {
   requests.deleteUserByDescription(description)
 }
+
+
+// TEST
+
+const email = "test1@mail.com"
+const emailHash = Buffer.from(email).toString('base64');
+
+console.log(emailHash)
+console.log(Buffer.from(emailHash, 'base64').toString())
+
+console.log("isRegistred", isEmailHashIdRegistred(emailHash))
+
+registerUser(email, emailHash)
+
+console.log("isRegistred", isEmailHashIdRegistred(emailHash))
+
+addUserImagesByEmailHashId(emailHash, "1.jpg")
+addUserImagesByEmailHashId(emailHash, "2.jpg")
+addUserImagesByEmailHashId(emailHash, "3.jpg")
+
+console.log(getUserImagesByEmailHashId(emailHash))

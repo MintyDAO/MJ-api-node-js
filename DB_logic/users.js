@@ -1,6 +1,5 @@
 // DB used
 // https://www.npmjs.com/package/simple-json-db
-
 const JSONdb = require('simple-json-db')
 const db = new JSONdb('DB_storage/users.json')
 
@@ -10,7 +9,7 @@ exports.isEmailHashIdRegistred = (emailHashId) => {
 
 exports.registerUser = (email, emailHashId) => {
   if(!db.has(emailHashId)){
-    if(atob(emailHashId) !== String(email).toLowerCase()){
+    if(Buffer.from(emailHashId, 'base64').toString() !== String(email).toLowerCase()){
       console.log("Wrong email hash, can not register user")
       return false
     }
@@ -19,7 +18,7 @@ exports.registerUser = (email, emailHashId) => {
     db.set(emailHashId, {
       email,
       email_hash_id:emailHashId,
-      img_uri:images:[],
+      img_uri:[],
       pay_time:0
     })
 
@@ -39,9 +38,6 @@ exports.getUserImagesByEmailHashId = (emailHashId) => {
 }
 
 exports.addUserImagesByEmailHashId = (emailHashId, img) => {
-  if(!db.has(emailHashId))
-    return
-
   let images = getValueByKey(emailHashId, 'img_uri')
 
   if(!images)
@@ -53,7 +49,7 @@ exports.addUserImagesByEmailHashId = (emailHashId, img) => {
 }
 
 exports.updateUserPayments = (email, payTime) => {
-  const emailHashId = btoa(email)
+  const emailHashId = Buffer.from(email).toString('base64');
 
   if(!db.has(emailHashId))
     return
