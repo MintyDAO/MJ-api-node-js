@@ -4,21 +4,33 @@
 const JSONdb = require('simple-json-db')
 const db = new JSONdb('DB_storage/users.json')
 
-const isEmailHashIdRegistred = (emailHashId) => {
+exports.isEmailHashIdRegistred = (emailHashId) => {
   return db.has(emailHashId)
 }
 
-const registerUser = (email, emailHashId) => {
-  if(!db.has(emailHashId))
+exports.registerUser = (email, emailHashId) => {
+  if(!db.has(emailHashId)){
+    if(atob(emailHashId) !== String(email).toLowerCase()){
+      console.log("Wrong email hash, can not register user")
+      return false
+    }
+
+
     db.set(emailHashId, {
       email,
       email_hash_id:emailHashId,
       img_uri:images:[],
       pay_time:0
-  })
+    })
+
+    return true
+  }
+  else{
+    return false
+  }
 }
 
-const getUserImagesByEmailHashId = (emailHashId) => {
+exports.getUserImagesByEmailHashId = (emailHashId) => {
   if(!db.has(emailHashId))
     return []
 
@@ -26,7 +38,7 @@ const getUserImagesByEmailHashId = (emailHashId) => {
   return res['img_uri']
 }
 
-const addUserImagesByEmailHashId = (emailHashId, img) => {
+exports.addUserImagesByEmailHashId = (emailHashId, img) => {
   if(!db.has(emailHashId))
     return
 
@@ -38,6 +50,15 @@ const addUserImagesByEmailHashId = (emailHashId, img) => {
   images.push(img)
 
   updateValueByKey(emailHashId, 'img_uri', images)
+}
+
+exports.updateUserPayments = (email, payTime) => {
+  const emailHashId = btoa(email)
+
+  if(!db.has(emailHashId))
+    return
+
+  updateValueByKey(emailHashId, 'pay_time', payTime)
 }
 
 // Helpers
