@@ -5,11 +5,12 @@ const fetchImagesFromChanel = require("./helpers/fetchImagesFromChanel")
 
 const router = express.Router()
 
-router.get('/', function(req, res) {
+router.route('/', function(req, res) {
   res.json({ message: 'API is Online!' })
 })
 
-router.get('/get-all-images', async function(req, res) {
+// get all images from latests 50 messages from discord chanel
+router.route('/get-all-images', async function(req, res) {
   const data = await fetchImagesFromChanel(
     process.env.DISCORD_OAUTH_TOKEN,
     config.chanelId,
@@ -18,13 +19,19 @@ router.get('/get-all-images', async function(req, res) {
   res.json({ data })
 })
 
-router.get('/get-latest-image', async function(req, res) {
+// get latest image from latests 50 messages from discord chanel
+router.route('/get-latest-image', async function(req, res) {
   const data = await fetchImagesFromChanel(
     process.env.DISCORD_OAUTH_TOKEN,
     config.chanelId,
     50)
 
   res.json({ data:data[0] })
+})
+
+
+router.post('/', function(req, res) {
+  res.json({ message: 'API is Online!' })
 })
 
 
