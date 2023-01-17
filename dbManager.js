@@ -5,58 +5,65 @@ const requests = require('./DB_logic/requests.js')
 // USERS DB actions
 
 // return true if succsses
-const registerUser = (email, emailHashId) => {
+exports.registerUser = (email, emailHashId) => {
   return users.registerUser(email, emailHashId)
 }
 
 // return true if exist
-const isEmailHashIdRegistred = (emailHashId) => {
+exports.isEmailHashIdRegistred = (emailHashId) => {
   return users.isEmailHashIdRegistred(emailHashId)
 }
 
-const getUserImagesByEmailHashId = (emailHashId) => {
+exports.getUserImagesByEmailHashId = (emailHashId) => {
   return users.getUserImagesByEmailHashId(emailHashId)
 }
 
-const addUserImagesByEmailHashId = (emailHashId, img) => {
+exports.addUserImagesByEmailHashId = (emailHashId, img) => {
   users.addUserImagesByEmailHashId(emailHashId, img)
 }
 
-const updateUserPayments = (email, payTime) => {
+exports.updateUserPayments = (email, payTime) => {
   users.updateUserPayments(email, payTime)
 }
 
 // REQUESTS DB actions
 
-const addNewRequest = (description, emailHashId) => {
+exports.addNewRequest = (description, emailHashId) => {
   requests.addNewRequest(description, emailHashId)
 }
 
-const getUserByRequest = (description) => {
-  requests.getUserByRequest(description)
+exports.getUserByRequest = (description) => {
+  return requests.getUserByRequest(description)
 }
 
-const deleteUserByDescription = (description) => {
+exports.deleteUserByDescription = (description) => {
   requests.deleteUserByDescription(description)
 }
 
 
 // TEST
 
-const email = "test1@mail.com"
-const emailHash = Buffer.from(email).toString('base64');
+// const email = "test1@mail.com"
+// const emailHash = Buffer.from(email).toString('base64')
+// const description = "cat2"
+//
+//
+// addNewRequest(description, emailHash)
+// console.log(getUserByRequest(description))
+// // deleteUserByDescription(description)
+// console.log(getUserByRequest(description))
 
-console.log(emailHash)
-console.log(Buffer.from(emailHash, 'base64').toString())
-
-console.log("isRegistred", isEmailHashIdRegistred(emailHash))
-
-registerUser(email, emailHash)
-
-console.log("isRegistred", isEmailHashIdRegistred(emailHash))
-
-addUserImagesByEmailHashId(emailHash, "1.jpg")
-addUserImagesByEmailHashId(emailHash, "2.jpg")
-addUserImagesByEmailHashId(emailHash, "3.jpg")
-
-console.log(getUserImagesByEmailHashId(emailHash))
+// console.log(emailHash)
+// console.log(Buffer.from(emailHash, 'base64').toString())
+//
+// console.log("isRegistred", isEmailHashIdRegistred(emailHash))
+//
+// registerUser(email, emailHash)
+//
+// console.log("isRegistred", isEmailHashIdRegistred(emailHash))
+//
+// addUserImagesByEmailHashId(emailHash, "1.jpg")
+// addUserImagesByEmailHashId(emailHash, "2.jpg")
+// addUserImagesByEmailHashId(emailHash, "3.jpg")
+//
+// console.log(getUserImagesByEmailHashId(emailHash))
