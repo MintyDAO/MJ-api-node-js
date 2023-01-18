@@ -101,13 +101,15 @@ router.route('/update-user-db').post(async (req, res) => {
 })
 
 
-router.route('/webhook').post(express.raw({type: 'application/json'}), async (request, response) => {
-  const sig = request.headers['stripe-signature'];
+router.route('/webhook').post(express.raw({type: 'application/json'}), async (req, res) => {
+  const sig = req.headers['stripe-signature'];
 
   let event;
 
+  console.log("test", req.body, req.rawBody)
+
   try {
-    event = stripe.webhooks.constructEvent(request.body, sig, process.env.STRIPE_ENDPOINT_SECRET);
+    event = stripe.webhooks.constructEvent(req.rawBody, sig, process.env.STRIPE_ENDPOINT_SECRET);
   } catch (err) {
     response.status(400).send(`Webhook Error: ${err.message}`);
     return;
