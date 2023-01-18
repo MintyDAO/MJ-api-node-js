@@ -1,10 +1,13 @@
 require('dotenv').config()
 const express = require('express')
 const config = require('./config')
+const stripe = require('stripe')(process.env.STRIPE_API_KEY)
+const router = express.Router()
+
 const fetchImagesFromChanel = require("./helpers/fetchImagesFromChanel")
 const generateImageInChanel = require("./helpers/generateImageInChanel")
-const dbManager = require("./helpers/dbManager")
-const router = express.Router()
+const dbManager = require("./dbManager")
+
 
 router.get('/', function(req, res) {
     res.json({ message: 'API is Online!' })
@@ -96,6 +99,39 @@ router.route('/update-user-db').post(async (req, res) => {
     return res.status(500).send("Server error")
   }
 })
+
+
+router.route('/webhook').post(express.raw({type: 'application/json'}), async (request, response) => {
+  const sig = request.headers['stripe-signature'];
+
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+  } catch (err) {
+    response.status(400).send(`Webhook Error: ${err.message}`);
+    return;
+  }
+
+  // Handle the event
+  switch (event.type) {
+    case 'payment_intent.succeeded':
+      const paymentIntent = event.data.object;
+
+      console.log("paymentIntent", paymentIntent)
+      // const customer = await stripe.customers.retrieve(
+      //   'cus_N8GwrzCX8MZemw'
+      // );
+
+      break;
+    // ... handle other event types
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
+
+  // Return a 200 response to acknowledge receipt of the event
+  response.send();
+});
 
 
 
