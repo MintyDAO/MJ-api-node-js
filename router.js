@@ -31,7 +31,7 @@ router.route('/get-latest-image').get(async function(req, res) {
 })
 
 // get user images by email hash id
-router.route('/user-pending-count/:user_id').get(async (req, res) => {
+router.route('/get-user-images/:user_id').get(async (req, res) => {
   const user_id = req.params.user_id
   const data = dbManager.getUserImagesByEmailHashId(user_id)
 
@@ -72,6 +72,29 @@ router.route('/trigger-bot').post(async function(req, res) {
      console.log("Trigger bot error: ", e)
      return res.status(500).send("Server error")
    }
+})
+
+
+// Update user images, using by BOT listener
+// TODO add secret token oauth for using only from bot
+router.route('/update-user-db').post(async (req, res) => {
+  const image_name = req.body.image_name
+  const img_uri = req.body.image_uri
+
+  if(!image_name || !img_uri)
+    return res.status(400).send("Bad request")
+
+  try{
+    const emailHash = dbManager.getUserByRequest(image_name)
+    dbManager.addUserImagesByEmailHashId(emailHash, img_uri)
+    dbManager.deleteUserByDescription(image_name)
+
+    return res.status(200).send("Success")
+  }
+  catch(e){
+    console.log("update user db error: ", e)
+    return res.status(500).send("Server error")
+  }
 })
 
 
