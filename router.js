@@ -104,16 +104,19 @@ router.route('/update-user-db').post(async (req, res) => {
 router.route('/webhook').post(express.raw({type: 'application/json'}), async (req, res) => {
   const sig = req.headers['stripe-signature'];
 
+  console.log("trigger webhook")
+  console.log("req.body", req.body)
+
   let event;
 
-  console.log("test", req.body, req.rawBody)
-
   try {
-    event = stripe.webhooks.constructEvent(req.rawBody, sig, process.env.STRIPE_ENDPOINT_SECRET);
+    event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_ENDPOINT_SECRET);
   } catch (err) {
     res.status(400).send(`Webhook Error: ${err.message}`);
     return;
   }
+
+  console.log("event.type", event.type)
 
   // Handle the event
   switch (event.type) {
