@@ -111,7 +111,7 @@ router.route('/webhook').post(express.raw({type: 'application/json'}), async (re
   try {
     event = stripe.webhooks.constructEvent(req.rawBody, sig, process.env.STRIPE_ENDPOINT_SECRET);
   } catch (err) {
-    response.status(400).send(`Webhook Error: ${err.message}`);
+    res.status(400).send(`Webhook Error: ${err.message}`);
     return;
   }
 
@@ -120,10 +120,17 @@ router.route('/webhook').post(express.raw({type: 'application/json'}), async (re
     case 'payment_intent.succeeded':
       const paymentIntent = event.data.object;
 
-      console.log("paymentIntent", paymentIntent)
-      // const customer = await stripe.customers.retrieve(
-      //   'cus_N8GwrzCX8MZemw'
-      // );
+      // console.log("paymentIntent", paymentIntent)
+      const customer = await stripe.customers.retrieve(
+        paymentIntent.customer
+      );
+
+      email = customer['email']
+      payTime = customer['created']
+
+      console.log(client_email, pay_time)
+
+      dbManager.updateUserPayments(email, payTime)
 
       break;
     // ... handle other event types
