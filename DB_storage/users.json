@@ -1,18 +1,8 @@
 {
-    "dGVzdDFAbWFpbC5jb20=": {
-        "email": "test1@mail.com",
-        "email_hash_id": "dGVzdDFAbWFpbC5jb20=",
-        "img_uri": [
-            "1.jpg",
-            "2.jpg",
-            "3.jpg",
-            "1.jpg",
-            "2.jpg",
-            "3.jpg",
-            "1.jpg",
-            "2.jpg",
-            "3.jpg"
-        ],
+    "bWlyb3ZydXNsYW5mQGdtYWlsLmNvbQ==": {
+        "email": "mirovruslanf@gmail.com",
+        "email_hash_id": "bWlyb3ZydXNsYW5mQGdtYWlsLmNvbQ==",
+        "img_uri": ["https://cdn.discordapp.com/attachments/1051817637925105767/1064906877902786630/MintyGod69_cat_263b28e9-0549-47df-8fec-9a0f779e312c.png"],
         "pay_time": 0
     }
 }
