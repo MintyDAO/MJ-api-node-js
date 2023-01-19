@@ -1,8 +1,9 @@
-
 const dbManager = require('../dbManager.js')
 const fetchAtachmentsFromChanel = require('./fetchAtachmentsFromChanel')
+const config = require('../config.js')
 
-exports.imgUpdaterByImgDescription = async (authorization, channelid, limit) => {
+module.exports = async (authorization, channelid, limit) => {
+  console.log("run imgUpdaterByImgDescription for check updates")
   // requests
   let requests = dbManager.getAllRequests()
 
@@ -34,4 +35,6 @@ exports.imgUpdaterByImgDescription = async (authorization, channelid, limit) => 
       });
     }catch(e){}
   });
+
+  console.log(`next run after ${config.updatesPeriod / 1000} seconds`)
 }

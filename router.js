@@ -77,29 +77,6 @@ router.route('/trigger-bot').post(async function(req, res) {
 })
 
 
-// Update user images, using by BOT listener
-// TODO add secret token oauth for using only from bot
-router.route('/update-user-db').post(async (req, res) => {
-  const image_name = req.body.image_name
-  const img_uri = req.body.image_uri
-
-  if(!image_name || !img_uri)
-    return res.status(400).send("Bad request")
-
-  try{
-    const emailHash = dbManager.getUserByRequest(image_name)
-    dbManager.addUserImagesByEmailHashId(emailHash, img_uri)
-    dbManager.deleteUserByDescription(image_name)
-
-    return res.status(200).send("Success")
-  }
-  catch(e){
-    console.log("update user db error: ", e)
-    return res.status(500).send("Server error")
-  }
-})
-
-
 router.route('/webhook').post(express.raw({type: 'application/json'}), async (req, res) => {
   const sig = req.headers['stripe-signature'];
 
@@ -143,6 +120,31 @@ router.route('/webhook').post(express.raw({type: 'application/json'}), async (re
   // Return a 200 response to acknowledge receipt of the event
   return res.status(200).send("Success")
 });
+
+
+// NOT used 
+
+// // Update user images, using by BOT listener
+// // TODO add secret token oauth for using only from bot
+// router.route('/update-user-db').post(async (req, res) => {
+//   const image_name = req.body.image_name
+//   const img_uri = req.body.image_uri
+//
+//   if(!image_name || !img_uri)
+//     return res.status(400).send("Bad request")
+//
+//   try{
+//     const emailHash = dbManager.getUserByRequest(image_name)
+//     dbManager.addUserImagesByEmailHashId(emailHash, img_uri)
+//     dbManager.deleteUserByDescription(image_name)
+//
+//     return res.status(200).send("Success")
+//   }
+//   catch(e){
+//     console.log("update user db error: ", e)
+//     return res.status(500).send("Server error")
+//   }
+// })
 
 
 

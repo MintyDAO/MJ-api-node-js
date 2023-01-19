@@ -5,6 +5,7 @@ const router = require('./router')
 const http = require('http').createServer(app)
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const runUpdater = require('./helpers/runUpdater')
 
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -15,4 +16,7 @@ const port = process.env.PORT || 9009
 app.use('/api', router)
 
 http.listen(port)
+
 console.log('Listening on port ' + port + " Version 17/01/23")
+
+runUpdater()
