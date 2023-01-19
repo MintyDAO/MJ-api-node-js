@@ -54,8 +54,7 @@ router.route('/trigger-bot').post(async function(req, res) {
      // generate image
      generateImageInChanel(
        process.env.DISCORD_OAUTH_TOKEN,
-       image_name,
-       config.nonce
+       image_name
      )
 
      // register user if not exist

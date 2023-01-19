@@ -7,8 +7,7 @@ const url = 'https://discord.com/api/v9/interactions'
 // const url2 = "https://discord.com/api/v9/channels/1051817637925105767/messages/1058340394359865344/ack"
 
 
-// module.exports = async (authorization, image_name) => {
-const test = async (authorization, image_name) => {
+module.exports = async (authorization, image_name) => {
 
   const prevNonce = nonceManager.getNonce()
   const nonce = String(BigInt(prevNonce) + BigInt("1"))
