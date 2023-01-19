@@ -16,3 +16,7 @@ exports.getUserByRequest = (description) => {
 exports.deleteUserByDescription = (description) => {
   database.delete(description)
 }
+
+exports.getAllRequests = () => {
+  return database.storage
+}

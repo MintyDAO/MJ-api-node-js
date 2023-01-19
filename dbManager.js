@@ -40,6 +40,11 @@ exports.deleteUserByDescription = (description) => {
   requests.deleteUserByDescription(description)
 }
 
+// should return JSON with requests
+exports.getAllRequests = () => {
+  return requests.getAllRequests()
+}
+
 
 // TEST
 
