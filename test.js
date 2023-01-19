@@ -7,3 +7,9 @@
 //   email,
 //   emailHash
 // )
+
+
+const prevNonce = "1065365874740822023"
+const nonce = String(BigInt(prevNonce) + BigInt("1"))
+
+console.log("Nonce", prevNonce, nonce)

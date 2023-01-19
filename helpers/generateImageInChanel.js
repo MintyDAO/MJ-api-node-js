@@ -1,12 +1,19 @@
-const axios = require('axios');
-
 // WARNING THIS SCRIPT BIND WITH HARDCODED CHANEL
+
+const axios = require('axios');
+const nonceManager = require('../nonceManager.js');
+
 const url = 'https://discord.com/api/v9/interactions'
 // const url2 = "https://discord.com/api/v9/channels/1051817637925105767/messages/1058340394359865344/ack"
 
 
-// module.exports = async (authorization, image_name, nonce) => {
-const test = async (authorization, image_name, nonce) => {
+// module.exports = async (authorization, image_name) => {
+const test = async (authorization, image_name) => {
+
+  const prevNonce = nonceManager.getNonce()
+  const nonce = String(BigInt(prevNonce) + BigInt("1"))
+
+  console.log("Prev nonce: ", prevNonce, "new nonce: ", nonce)
 
   const data = {
       "type":2,
@@ -56,23 +63,11 @@ const test = async (authorization, image_name, nonce) => {
   				"authorization": authorization
   			}
   		})
-
       console.log("res 1", res.status)
 
-      // const res2 = await axios.post(url2, {
-  		// 	headers: {
-  		// 		"authorization": authorization
-  		// 	}
-  		// })
-
-      // console.log("res 2", res2.status)
+      // update nonce
+      nonceManager.setNonce(nonce)
     }catch(e){
       console.log("Err", e)
     }
 }
-
-test(
-  "ODIzMjMwODIwMDA1MDUyNDE2.GpITzs.KR5sEDNjiL5h8JaFbjOJ3V_HUOx8I21FKQeitY",
-  "Ukraine soldier art",
-  "1065365874740822021"
-)
