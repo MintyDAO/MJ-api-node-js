@@ -45,7 +45,7 @@ router.route('/get-user-images/:user_id').get(async (req, res) => {
 // Register user email hash by this request if user not exist
 router.route('/trigger-bot').post(async function(req, res) {
    const image_name = req.body.image_name
-   const email_hash_id = req.body.email_hash
+   const email_hash_id = req.body.email_hash_id
 
    if(!image_name || !email_hash_id)
      return res.status(400).send("Bad request")
@@ -55,7 +55,7 @@ router.route('/trigger-bot').post(async function(req, res) {
      generateImageInChanel(
        process.env.DISCORD_OAUTH_TOKEN,
        image_name,
-       nonce
+       config.nonce
      )
 
      // register user if not exist
