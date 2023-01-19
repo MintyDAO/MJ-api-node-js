@@ -2,7 +2,12 @@
     "bWlyb3ZydXNsYW5mQGdtYWlsLmNvbQ==": {
         "email": "mirovruslanf@gmail.com",
         "email_hash_id": "bWlyb3ZydXNsYW5mQGdtYWlsLmNvbQ==",
-        "img_uri": ["https://cdn.discordapp.com/attachments/1051817637925105767/1064906877902786630/MintyGod69_cat_263b28e9-0549-47df-8fec-9a0f779e312c.png"],
+        "img_uri": [
+            "https://cdn.discordapp.com/attachments/1051817637925105767/1064906877902786630/MintyGod69_cat_263b28e9-0549-47df-8fec-9a0f779e312c.png",
+            "https://cdn.discordapp.com/attachments/1051817637925105767/1065558913132527686/MintyGod69_space_cowboy_e9945c7b-0abf-4071-92f7-596104a402a4.png",
+            "https://cdn.discordapp.com/attachments/1051817637925105767/1065373124050305034/MintyGod69_robot_as_cat_cea4418e-4ec8-4019-8e49-ecdaebb8f0b6.png",
+            "https://cdn.discordapp.com/attachments/1051817637925105767/1061260922175369346/Rus_Homer_simpson_as_Navi_625349a0-7a99-42ca-8e3a-8a35af04fee7.png"
+        ],
         "pay_time": 0
     }
 }
