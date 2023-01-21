@@ -57,10 +57,13 @@ router.route('/trigger-bot').post(async function(req, res) {
        image_name
      )
 
+     console.log("registred user :", dbManager.isEmailHashIdRegistred(email_hash_id))
+
      // register user if not exist
      if(!dbManager.isEmailHashIdRegistred(email_hash_id)){
        const email = Buffer.from(email_hash_id, 'base64').toString()
-       dbManager.registerUser = (email, email_hash_id)
+       dbManager.registerUser(email, email_hash_id)
+       console.log("registred user")
      }
 
      // add new pending requests
@@ -122,7 +125,7 @@ router.route('/webhook').post(express.raw({type: 'application/json'}), async (re
 });
 
 
-// NOT used 
+// NOT used
 
 // // Update user images, using by BOT listener
 // // TODO add secret token oauth for using only from bot
