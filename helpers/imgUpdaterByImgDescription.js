@@ -1,6 +1,8 @@
-const dbManager = require('../dbManager.js')
+const dbManager = require('../managers/dbManager.js')
 const fetchAtachmentsFromChanel = require('./fetchAtachmentsFromChanel')
 const config = require('../config.js')
+const socketsManager = require('../managers/socketsManager')
+const sockets = require('../sockets')
 
 module.exports = async (authorization, channelid, limit) => {
   console.log("run imgUpdaterByImgDescription for check updates")
@@ -31,6 +33,11 @@ module.exports = async (authorization, channelid, limit) => {
           const emailHash = dbManager.getUserByRequest(item)
           dbManager.addUserImagesByEmailHashId(emailHash, jsonObject.url)
           dbManager.deleteUserByDescription(item)
+
+          // send socket
+          const socketId = socketsManager.getSocket(emailHash)
+          if(socketId)
+            sockets.emitTo(socketId, "should-update-images", "True")
         }
       });
     }catch(e){}

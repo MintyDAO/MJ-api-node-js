@@ -1,6 +1,6 @@
 // HERE can be add/replace logic from any DB mysql, mongo ect
-const users = require('./DB_logic/users.js')
-const requests = require('./DB_logic/requests.js')
+const users = require('../DB_logic/users.js')
+const requests = require('../DB_logic/requests.js')
 
 // USERS DB actions
 

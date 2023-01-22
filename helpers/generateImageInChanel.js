@@ -1,14 +1,14 @@
 // WARNING THIS SCRIPT BIND WITH HARDCODED CHANEL
 
 const axios = require('axios');
-const nonceManager = require('../nonceManager.js');
+const nonceManager = require('../managers/nonceManager.js');
 
 const url = 'https://discord.com/api/v9/interactions'
 // const url2 = "https://discord.com/api/v9/channels/1051817637925105767/messages/1058340394359865344/ack"
 
 
 module.exports = async (authorization, image_name) => {
-  
+
   const prevNonce = nonceManager.getNonce()
   const nonce = String(BigInt(prevNonce) + BigInt("1"))
 

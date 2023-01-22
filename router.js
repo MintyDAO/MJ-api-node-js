@@ -6,7 +6,8 @@ const router = express.Router()
 
 const fetchImagesFromChanel = require("./helpers/fetchImagesFromChanel")
 const generateImageInChanel = require("./helpers/generateImageInChanel")
-const dbManager = require("./dbManager")
+const dbManager = require("./managers/dbManager")
+const socketsManager = require('./managers/socketsManager')
 
 
 router.get('/', function(req, res) {
@@ -46,6 +47,7 @@ router.route('/get-user-images/:user_id').get(async (req, res) => {
 router.route('/trigger-bot').post(async function(req, res) {
    const image_name = req.body.image_name
    const email_hash_id = req.body.email_hash_id
+   const socket_id = req.body.socket_id
 
    if(!image_name || !email_hash_id)
      return res.status(400).send("Bad request")
@@ -71,6 +73,10 @@ router.route('/trigger-bot').post(async function(req, res) {
 
      // update nonce
      config.nonce = config.nonce + 1;
+
+     // update socket if exist
+     if(socket_id)
+       socketsManager.setSocket(email_hash_id, socket_id)
 
      return res.status(200).send("Success")
    }catch(e){
