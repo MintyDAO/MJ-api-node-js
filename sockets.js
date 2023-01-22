@@ -31,5 +31,15 @@ module.exports = {
         else{
           console.log("IO not connected")
         }
+    },
+
+    emit: function(eventName, eventObj) {
+        if (io) {
+          io.emit(eventName, values);
+          console.log("emmit", eventName, eventObj)
+        }
+        else{
+          console.log("IO not connected")
+        }
     }
 }

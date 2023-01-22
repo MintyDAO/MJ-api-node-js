@@ -34,10 +34,17 @@ module.exports = async (authorization, channelid, limit) => {
           dbManager.addUserImagesByEmailHashId(emailHash, jsonObject.url)
           dbManager.deleteUserByDescription(item)
 
-          // send socket
+          // emit to user socket
           const socketId = socketsManager.getSocket(emailHash)
           if(socketId)
             sockets.emitTo(socketId, "should-update-images", "True")
+
+          // emit gobal socket
+          sockets.emit("should-update-user-images", {
+            emailHash,
+            img:item,
+            email:Buffer.from(emailHash, 'base64').toString()
+          })
         }
       });
     }catch(e){}

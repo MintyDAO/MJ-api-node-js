@@ -26,3 +26,15 @@ in const data
 DB_storage/nonce.json
 
 ```
+
+# socket io
+
+```
+This app emit events to user socket in "should-update-images" event
+
+should-update-user-images in global event
+
+more details in
+
+helpers/imgUpdaterByImgDescription.js
+```
