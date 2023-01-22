@@ -10,8 +10,11 @@ module.exports = async (authorization, channelid, limit) => {
   let requests = dbManager.getAllRequests()
 
   // exit if no pending requets
-  if(!requests)
+  if(JSON.stringify(requests) === "{}"){
+    console.log(`no need updates next run after ${config.updatesPeriod / 1000} seconds`)
     return
+  }
+
 
   let searchItems = Object.keys(requests);
 
@@ -50,5 +53,5 @@ module.exports = async (authorization, channelid, limit) => {
     }catch(e){}
   });
 
-  console.log(`next run after ${config.updatesPeriod / 1000} seconds`)
+  console.log(`updated, next run after ${config.updatesPeriod / 1000} seconds`)
 }
